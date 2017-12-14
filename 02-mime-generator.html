@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    html{
+      width: 100%;
+      height: 100%;
+    }
+    body{
+      width: 90%;
+      margin : 0 auto;
+    }
+    h3{
+      display : inline-block
+    }
+    canvas{
+      display : block
+    }
+  </style>
+</head>
+<body>
+  <h3>选择你的表情包吧：</h3>
+  <input type="file">
+  <canvas width = "500" height = "500"></canvas>
+  <label for="">请输入你的文字</label><input type="text" class = "textInput">
+  <script>
+    let oCanvas = document.querySelector('canvas');
+    let oCtx = oCanvas.getContext('2d');
+    //这里使用设计模式
+    let canvasCall = (function(){
+      'use strict'
+      return {
+        font : function(mstyle){
+          oCtx.font = mstyle
+          return this
+        },
+        fillText : function(text,dx,dy){
+          oCtx.fillText(text,dx,dy)
+          return this
+        },
+        strokeText : function(text,dx,dy){
+          oCtx.strokeText(text,dx,dy)
+          return this
+        },
+        drawImage(image,dx,dy,dWidth,dHeight){
+          oCtx.drawImage(image,dx,dy,dWidth,dHeight)
+          return this
+        },
+        exec(arr){
+          var fn = arr[0]
+          var params = []
+          for(var i = 1;i<arr.length;i++){
+            params.push(arr[i])
+          }
+          this[fn].apply(oCtx,params)
+          return this
+        }
+      }
+    })()
+
+    canvasCall.exec(['font','36px PingFang SC']).exec(['fillText','然而响子早已看穿一切',oCanvas.width/2,oCanvas.height-20])
+  </script>
+</body>
+</html>
