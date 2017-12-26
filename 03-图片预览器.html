@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" multiple>
+  <script>
+    let oFile = document.querySelector('input[type=file]')
+    let imageReg = /image/
+    oFile.addEventListener("change",fileHandler)
+
+    function fileHandler(){
+      let files =  this.files
+      let imageGroup
+      if(files.length === 0) return
+      for(let i = 0 ; i<files.length;i++){
+        if(!imageReg.test(files[i].type)){
+         continue
+        }
+        let reader = new FileReader()
+        reader.onload = function(progressEvent){
+          let tImg = document.createElement('img')
+          tImg.src =  progressEvent.target.result
+          document.body.appendChild(tImg)
+          console.log(progressEvent.target.result)
+        }
+        reader.readAsDataURL(this.files[i])
+      }
+    }
+
+  </script>
+</body>
+</html>

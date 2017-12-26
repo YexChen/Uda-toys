@@ -35,6 +35,8 @@
     let oCanvas = document.querySelector('canvas');
     let oCtx = oCanvas.getContext('2d');
     let fileUpload = document.querySelector('#upload')
+    let oText = document.querySelector('.textInput')
+    let imageReg = /image/
     //这里使用设计模式
     let canvasCall = (function(){
       'use strict'
@@ -67,11 +69,27 @@
       }
     })()
 
-    fileUpload.onchange = ()=>{
-      console.dir(this)
+    fileUpload.onchange = function(){
+      let reader = new FileReader()
+      let oFile = this.files[0]
+      //这里是读取函数
+      if(!imageReg.test(oFile.type)) return
+
+      reader.addEventListener("load",function(progressEvent){
+        var tImg = new Image()
+        tImg.src = progressEvent.target.result
+        tImg.onload = function(){
+          canvasCall.exec(['drawImage',tImg,0,0,oCanvas.width,oCanvas.height])
+        }
+      })
+      reader.readAsDataURL(oFile)
     }
 
-    canvasCall.exec(['font','36px PingFang SC']).exec(['fillText','然而响子早已看穿一切',oCanvas.width/2-200,oCanvas.height-20])
+    oText.addEventListener("input",function(){
+      let tText = this.value
+      canvasCall.exec(['font','36px PingFang SC']).exec(['fillText',tText,oCanvas.width/2-200,oCanvas.height-20])
+    })
+
   </script>
 </body>
 </html>
