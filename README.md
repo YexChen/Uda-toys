@@ -1,2 +1,2 @@
-# Uda-toys
-优达学院的一些东西，上班之余做一做
+##使用js来读取文件
+https://developer.mozilla.org/zh-CN/docs/Web/API/File/Using_files_from_web_applications

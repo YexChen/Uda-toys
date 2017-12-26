@@ -28,12 +28,13 @@
 </head>
 <body>
   <h3>选择你的表情包吧：</h3>
-  <input type="file">
+  <input type="file" id = "upload">
   <canvas width = "500" height = "500"></canvas>
   <label for="">请输入你的文字</label><input type="text" class = "textInput">
   <script>
     let oCanvas = document.querySelector('canvas');
     let oCtx = oCanvas.getContext('2d');
+    let fileUpload = document.querySelector('#upload')
     //这里使用设计模式
     let canvasCall = (function(){
       'use strict'
@@ -66,7 +67,11 @@
       }
     })()
 
-    canvasCall.exec(['font','36px PingFang SC']).exec(['fillText','然而响子早已看穿一切',oCanvas.width/2,oCanvas.height-20])
+    fileUpload.onchange = ()=>{
+      console.dir(this)
+    }
+
+    canvasCall.exec(['font','36px PingFang SC']).exec(['fillText','然而响子早已看穿一切',oCanvas.width/2-200,oCanvas.height-20])
   </script>
 </body>
 </html>
